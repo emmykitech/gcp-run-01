@@ -8,7 +8,7 @@ gcloud config set compute/zone us-east1-d
 gcloud compute instances create --machine-type=f1-micro nucleus-jumphost-499
 
 #create compute clusters
-gcloud container clusters create --machine-type=n1-standard-1 --zone=us-west4-a kub-cluster 
+gcloud container clusters create --machine-type=n1-standard-1 --zone=us-east1-d kub-cluster 
 
 #authenticate kub server
 gcloud container clusters get-credentials kub-cluster 
