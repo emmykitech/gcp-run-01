@@ -15,10 +15,6 @@ gcloud compute target-pools create www-pool \
   --region us-west4 --http-health-check basic-check #needs check 
 
 
-gcloud compute target-pools add-instances www-pool \
-    --instances www1,www2,www3
-
-
 cat << EOF > startup.sh
 #! /bin/bash
 apt-get update
