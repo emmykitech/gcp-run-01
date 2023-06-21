@@ -1,13 +1,23 @@
 #!/bin/bash
 
 gcloud compute instance-templates create lb-backend-template \
-   --region= \
+   --region=us-west4 \
    --network=default \
    --subnet=default \
    --tags=allow-health-check \
    --machine-type=f1-micro \
    --image-family=debian-11 \
    --image-project=debian-cloud 
+
+#target pool
+
+gcloud compute target-pools create www-pool \
+  --region us-west4 --http-health-check basic-check #needs check 
+
+
+gcloud compute target-pools add-instances www-pool \
+    --instances www1,www2,www3
+
 
 cat << EOF > startup.sh
 #! /bin/bash
@@ -19,10 +29,10 @@ EOF
 
 
 gcloud compute instance-groups managed create lb-backend-group \
-   --template=lb-backend-template --size=2 --zone=us-west4-a
+   --template=lb-backend-template --size=2 --zone=us-west4-b  # needs checking.
 
 
-gcloud compute firewall-rules create fw-allow-health-check \
+gcloud compute firewall-rules create permit-tcp-rule-721 \
   --network=default \
   --action=allow \
   --direction=ingress \
